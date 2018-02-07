@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore; // UseSqlServer
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using vega.Persistence;
 
 namespace vega
 {
@@ -22,6 +24,12 @@ namespace vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // registering DBContext services
+            services.AddDbContext<VegaDbContext>(
+                options => options.UseSqlServer(Configuration["ConnectionsStrings:Default"]) // or Configuration.GetConnectionString("Default")
+            );
+
+            // add framework services
             services.AddMvc();
         }
 
