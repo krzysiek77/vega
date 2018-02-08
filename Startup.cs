@@ -46,6 +46,7 @@ namespace vega
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true
+                    //HotModuleReplacementEndpoint = "/dist/__webpack_hmr"
                 });
             }
             else
