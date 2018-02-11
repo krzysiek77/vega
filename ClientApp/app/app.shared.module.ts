@@ -11,9 +11,7 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 
-import { FeatureService } from './services/feature.service';
-import { MakeService } from './services/make.service';
-import { ModelService } from './services/model.service';
+import { VehicleService } from './services/vehicle.service';
 
 @NgModule({
     declarations: [
@@ -38,9 +36,7 @@ import { ModelService } from './services/model.service';
         ])
     ],
     providers: [
-        MakeService,
-        ModelService,
-        FeatureService
+        VehicleService
     ]
 })
 export class AppModuleShared {
