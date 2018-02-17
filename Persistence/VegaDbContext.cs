@@ -17,6 +17,7 @@ namespace vega.Persistence
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleFeature> VehicleFeatures { get; set; }
 
+        // composite unique key
         protected override void OnModelCreating (ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<VehicleFeature>()

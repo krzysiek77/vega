@@ -53,8 +53,9 @@ namespace vega.Controllers
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
 
-            return CreatedAtRoute("GetVehicle", new { id = vehicle.Id }, vehicle);
-            
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+
+            return CreatedAtRoute("GetVehicle", new { id = vehicle.Id }, result);
         }
 
         [HttpPut("{id}")]
