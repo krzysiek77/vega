@@ -31,7 +31,7 @@ export class VehicleFormComponent implements OnInit {
 
   onMakeChange()
   {
-    var selectedMake = this.makes.find(m => m.id == this.vehicle.make);
+    var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     //this.models = selectedMake ? selectedMake.models : [];
     if (selectedMake) {
       this.vehicleService.getModels(selectedMake.id).subscribe(models => {
@@ -41,6 +41,7 @@ export class VehicleFormComponent implements OnInit {
     } else {
       this.models = [];
     }
+    delete this.vehicle.modelId;
     
   }
 
