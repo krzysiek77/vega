@@ -76,7 +76,7 @@ namespace vega.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var vehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+            var vehicle = await context.Vehicles.Include(v => v.Features).FirstOrDefaultAsync(v => v.Id == id);
             if (vehicle == null)
                 return NotFound();
 
