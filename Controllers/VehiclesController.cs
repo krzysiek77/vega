@@ -25,7 +25,7 @@ namespace vega.Controllers
         [HttpGet]
         public async Task<IEnumerable<VehicleResource>> GetVehicleAsync()
         {
-            var vehicles = await context.Vehicles.Include(v => v.Features).ToListAsync();
+            var vehicles = await context.Vehicles.Include(v => v.Features).Include(v => v.Model).ToListAsync();
 
             return mapper.Map<List<Vehicle>, List<VehicleResource>>(vehicles);
         }
@@ -33,7 +33,7 @@ namespace vega.Controllers
         [HttpGet("{id}", Name = "GetVehicle")]
         public async Task<IActionResult> GetById(long id)
         {
-            var vehicle = await context.Vehicles.Include(v => v.Features).FirstOrDefaultAsync(v => v.Id == id);
+            var vehicle = await context.Vehicles.Include(v => v.Features).Include(v => v.Model).FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
                 return NotFound();
