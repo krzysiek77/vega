@@ -37,10 +37,18 @@ namespace vega.Mapping
                     foreach (var f in removedFeatures)
                         v.Features.Remove(f); // but here I can modify v.Features
 
+                    // var removedFeatures = v.Features.Where(f => !vr.Features.Contains(f.FeatureId));
+                    // foreach (var f in removedFeatures)
+                    //     v.Features.Remove(f);
+                    
                     // add new feature(s)
                     foreach (var id in vr.Features)
                         if (!v.Features.Any(f => f.FeatureId == id))
                             v.Features.Add(new VehicleFeature { FeatureId = id });
+
+                    // var addedFeatures = vr.Features.Where(id => !v.Features.Any(f => f.FeatureId == id)).Select(id => new VehicleFeature { FeatureId = id });
+                    // foreach (var f in addedFeatures)
+                    //     v.Features.Add(f);
                 });
         }
     }
