@@ -45,17 +45,17 @@
 
   <div class="form-group">
     <label for="contactName">Contact Name</label>
-    <input type="text" class="form-control" id="contactName">
+    <input type="text" class="form-control" id="contactName" [(ngModel)]="vehicle.contact.name" name="contactName">
   </div>
 
   <div class="form-group">
     <label for="contactPhone">Contact Phone</label>
-    <input type="text" class="form-control" id="contactPhone">
+    <input type="text" class="form-control" id="contactPhone" [(ngModel)]="vehicle.contact.phone" name="contactPhone">
   </div>
 
   <div class="form-group">
     <label for="contactEmail">Contact Email</label>
-    <input type="email" class="form-control" id="contactEmail">
+    <input type="email" class="form-control" id="contactEmail" [(ngModel)]="vehicle.contact.email" name="contactEmail">
   </div>
 
   <button class="btn btn-primary">Save</button>
