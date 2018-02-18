@@ -26,6 +26,7 @@ namespace vega
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             // add AutoMapper dependency injection services
             services.AddAutoMapper();
 
