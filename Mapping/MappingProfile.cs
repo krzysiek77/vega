@@ -22,6 +22,7 @@ namespace vega.Mapping
 
             // API Resource to Domain - to save vehicle
             CreateMap<VehicleResource, Vehicle>()
+                .ForMember(v => v.Id, opt => opt.Ignore()) // to ignore Id while update
                 .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.Contact.Name))
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
                 .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.Contact.Phone))

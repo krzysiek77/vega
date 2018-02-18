@@ -73,8 +73,8 @@ namespace vega.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, [FromBody] VehicleResource vehicleResource)
         {
-            if (vehicleResource == null || vehicleResource.Id != id)
-                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var vehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
             if (vehicle == null)
