@@ -22,12 +22,12 @@ namespace vega.Controllers
         }
 
         [HttpGet("/api/makes/{id}/models/")]
-        public async Task<IEnumerable<ModelResource>> GetModelsOfMake(int id)
+        public async Task<IEnumerable<KeyValuePairResource>> GetModelsOfMake(int id)
         {
             var models = await context.Models.Where(x => x.MakeId == id).ToListAsync();
             // var models = await context.Models.ToListAsync();
             
-            return mapper.Map<List<Model>, List<ModelResource>>(models);
+            return mapper.Map<List<Model>, List<KeyValuePairResource>>(models);
         }
     }
 }

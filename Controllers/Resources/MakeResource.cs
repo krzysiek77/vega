@@ -4,11 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace vega.Controllers.Resources
 {
-    public class MakeResource
+    public class MakeResource : KeyValuePairResource
     {
-        public int id { get; set; }
-        public string Name { get; set; }
-        public ICollection<ModelResource> Models { get; set; }
+        public ICollection<KeyValuePairResource> Models { get; set; }
 
         // when using ICollection, initialize it in constructor
         public MakeResource()
@@ -17,7 +15,7 @@ namespace vega.Controllers.Resources
             // that elements in List can be accessed by index
             // in this case, I just want to serialize Models of each Make,
             // that's why I use Collection
-            Models = new Collection<ModelResource>();  
+            Models = new Collection<KeyValuePairResource>();  
         }
     }
 }
