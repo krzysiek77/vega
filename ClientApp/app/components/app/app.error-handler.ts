@@ -1,7 +1,7 @@
 import * as Raven from 'raven-js';
 
 import { ToastyService } from 'ng2-toasty';
-import { ErrorHandler, Inject, NgZone } from "@angular/core";
+import { ErrorHandler, Inject, NgZone, isDevMode } from "@angular/core";
 
 export class AppErrorHandler implements ErrorHandler {
 
@@ -10,7 +10,10 @@ export class AppErrorHandler implements ErrorHandler {
         @Inject(ToastyService) private toastyService: ToastyService) {};
 
     handleError(error: any): void {
-        Raven.captureException(error.originalError || error);
+        if (!isDevMode())
+            Raven.captureException(error.originalError || error);
+        else
+            throw error; // throw error to the console
 
         this.ngZone.run(() => {
             if (typeof(window) !== 'undefined') {
@@ -25,3 +28,9 @@ export class AppErrorHandler implements ErrorHandler {
         });
     }
 }
+
+// run below to change from DEV to PROD:
+// - ASPNETCORE_ENVIRONMENT=Production 
+//     (this runs proper section in Configure() in startup.cs)
+// - run in terminal: webpack
+//     (or npm run webpack - to re-generate main bundle)
