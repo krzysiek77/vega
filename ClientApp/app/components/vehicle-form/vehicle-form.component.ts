@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../../services/vehicle.service';
-// import { ToastyService } from 'ng2-toasty';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/Observable/forkJoin';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -17,20 +19,37 @@ export class VehicleFormComponent implements OnInit {
   };
 
   constructor(
+    private route: ActivatedRoute, // to read route parameters
+    private router: Router, // to navigate user to different page if they pass invalid id
     private vehicleService: VehicleService
-  ) { }
+  ) { 
+    route.params.subscribe(p => {
+      this.vehicle.id = +p['id']; // + in-front to convert string to number
+    });
+  }
 
   ngOnInit() {
-    // get list of all available Makes
-    this.vehicleService.getMakes().subscribe(makes => {
-      this.makes = makes;
-    });
+    var sources = [
+      this.vehicleService.getMakes(),
+      this.vehicleService.getFeatures()
+    ];
 
-    // get list of all available Features
-    this.vehicleService.getFeatures().subscribe(features => {
-      this.features = features;
-      //console.log("Features: ", this.features);
-    });
+    // to not call it, when creating new vehicle (id = 0 or NaN).
+    // otherwise it goes into loop and redirect to /home every time when I try to hit /vehicles/new
+    if (this.vehicle.id)
+      sources.push(this.vehicleService.getVehicle(this.vehicle.id));
+
+    Observable.forkJoin(sources)
+      .subscribe(data => {
+        this.makes = data[0];
+        this.features = data[1];
+        
+        if (this.vehicle.id)
+          this.vehicle = data[2];
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/home']);
+      });
   }
 
   onMakeChange()

@@ -10,10 +10,10 @@ export class AppErrorHandler implements ErrorHandler {
         @Inject(ToastyService) private toastyService: ToastyService) {};
 
     handleError(error: any): void {
-        if (!isDevMode())
+        //if (!isDevMode())
             Raven.captureException(error.originalError || error);
-        else
-            throw error; // throw error to the console
+        //else
+        //    throw error; // throw error to the console
 
         this.ngZone.run(() => {
             if (typeof(window) !== 'undefined') {
