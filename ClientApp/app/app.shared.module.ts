@@ -1,3 +1,5 @@
+import { AppErrorHandler } from './components/app/app.error-handler';
+import { ErrorHandler } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -39,6 +41,7 @@ import { VehicleService } from './services/vehicle.service';
         ])
     ],
     providers: [
+        { provide: ErrorHandler, useClass: AppErrorHandler}, // wherever instance of ErrorHandler is needed, create instance of AppErrorHandler instead
         VehicleService
     ]
 })
