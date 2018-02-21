@@ -1,8 +1,12 @@
+
 import { Component, OnInit } from '@angular/core';
-import { VehicleService } from '../../services/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
+import * as _ from 'underscore';
+
+import { VehicleService } from '../../services/vehicle.service';
+import { Vehicle, SaveVehicle } from './../../models/vehicle';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -13,9 +17,17 @@ export class VehicleFormComponent implements OnInit {
   makes: any[] = [];
   models: any[] = [];
   features: any[] = [];
-  vehicle: any = {
+  vehicle: SaveVehicle = {
+    id: 0,
+    makeId: 0,
+    modelId: 0,
+    isRegistered: false,
     features: [],
-    contact: {}
+    contact: {
+      name: '',
+      phone: '',
+      email: ''
+    }
   };
 
   constructor(
@@ -45,11 +57,23 @@ export class VehicleFormComponent implements OnInit {
         this.features = data[1];
         
         if (this.vehicle.id)
-          this.vehicle = data[2];
+          this.setVehicle(data[2]);
+          
       }, err => {
         if (err.status == 404)
           this.router.navigate(['/home']);
       });
+  }
+
+  // how to map object from server (complete representation of a vehicle)
+  // to a save vehicle resource object.
+  private setVehicle(v: Vehicle) {
+    this.vehicle.id = v.id;
+    this.vehicle.modelId = v.model.id;
+    this.vehicle.makeId = v.make.id;
+    this.vehicle.isRegistered = v.isRegistered;
+    this.vehicle.contact = v.contact;
+    this.features = _.pluck(v.features, 'id');
   }
 
   onMakeChange()

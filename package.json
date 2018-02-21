@@ -63,7 +63,9 @@
     "zone.js": "0.8.12"
   },
   "dependencies": {
+    "@types/underscore": "^1.8.7",
     "ng2-toasty": "^4.0.3",
-    "raven-js": "^3.22.3"
+    "raven-js": "^3.22.3",
+    "underscore": "^1.8.3"
   }
 }

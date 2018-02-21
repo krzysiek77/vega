@@ -899,6 +899,11 @@
       "integrity": "sha512-2YNL0jXYuN7w07mb1sMZQ6T6zOvGi83v8UbjhBZ8mhvI1VkQ2STU9XOrTFyvWswMyh5rW1evS+e7qltYJvTqPA==",
       "dev": true
     },
+    "@types/underscore": {
+      "version": "1.8.7",
+      "resolved": "https://registry.npmjs.org/@types/underscore/-/underscore-1.8.7.tgz",
+      "integrity": "sha512-vMSV6VOWFVBcud1bBUKJVVhXmmx136Run3p1xK00XViC2pQnXXrveU79S13h2+Im/TBhtMtTufid+dbysd3m/g=="
+    },
     "@types/webpack-env": {
       "version": "1.13.0",
       "resolved": "https://registry.npmjs.org/@types/webpack-env/-/webpack-env-1.13.0.tgz",
@@ -11405,6 +11410,11 @@
       "resolved": "https://registry.npmjs.org/ultron/-/ultron-1.0.2.tgz",
       "integrity": "sha1-rOEWq1V80Zc4ak6I9GhTeMiy5Po=",
       "dev": true
+    },
+    "underscore": {
+      "version": "1.8.3",
+      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz",
+      "integrity": "sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI="
     },
     "union-value": {
       "version": "0.2.4",
