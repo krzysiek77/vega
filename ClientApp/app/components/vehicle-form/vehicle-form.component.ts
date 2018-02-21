@@ -1,3 +1,4 @@
+import { ToastyService } from 'ng2-toasty';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,7 +34,8 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, // to read route parameters
     private router: Router, // to navigate user to different page if they pass invalid id
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private toastyService: ToastyService
   ) { 
     route.params.subscribe(p => {
       this.vehicle.id = +p['id']; // + in-front to convert string to number
@@ -107,25 +109,39 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle)
-      .subscribe(
-        x => console.log(x) 
-      // instead of handling errors here, they are handled on app.module level by custom class.
-      //,
-      // err => {
-      //   // to catch and display server site errors
-      //   // if (err.status == 400) {
-
-      //   // }
-      //   this.toastyService.error({
-      //     title: 'Error',
-      //     msg: 'An unexpected error happened.',
-      //     theme: 'bootstrap',
-      //     showClose: true,
-      //     timeout: 5000
-      //   });
-      // }
-    );
+    if (this.vehicle.id) {
+      this.vehicleService.update(this.vehicle)
+        .subscribe(x=> {
+          this.toastyService.success({
+            title: 'Success',
+            msg: 'The vehicle was sucessfully updated.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 5000
+          });
+        });
+    }
+    else {
+      this.vehicleService.create(this.vehicle)
+        .subscribe(
+          x => console.log(x) 
+        // instead of handling errors here, they are handled on app.module level by custom class.
+        //,
+        // err => {
+        //   // to catch and display server site errors
+        //   // if (err.status == 400) {
+  
+        //   // }
+        //   this.toastyService.error({
+        //     title: 'Error',
+        //     msg: 'An unexpected error happened.',
+        //     theme: 'bootstrap',
+        //     showClose: true,
+        //     timeout: 5000
+        //   });
+        // }
+      );
+    }
   }
 
 }
