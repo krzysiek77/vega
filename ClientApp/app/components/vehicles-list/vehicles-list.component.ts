@@ -29,7 +29,6 @@ export class VehiclesListComponent implements OnInit {
     var selectedMakeId = 0;
 
     if (this.filter.makeId) {
-      console.log("bum");
       vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
       selectedMakeId = this.filter.makeId;
       this.vehicleService.getModels(this.filter.makeId)
@@ -46,6 +45,11 @@ export class VehiclesListComponent implements OnInit {
 
     // delete it, so it won't affert another search when the make has been changed
     delete this.filter.modelId;
+  }
+
+  resetFilter() {
+    this.filter = {};
+    this.onFilterChange();
   }
 
 }
