@@ -24,13 +24,13 @@ namespace vega.Controllers
             this.mapper = mapper;
         }
 
-        // [HttpGet]
-        // public async Task<IEnumerable<VehicleResource>> GetVehicleAsync()
-        // {
-        //     var vehicles = await context.Vehicles.Include(v => v.Features).Include(v => v.Model).ToListAsync();
+        [HttpGet(Name = "GetVehicles")]
+        public async Task<IEnumerable<VehicleResource>> GetVehicleAsync()
+        {
+            var vehicles = await repository.GetVehicles();
 
-        //     return mapper.Map<List<Vehicle>, List<VehicleResource>>(vehicles);
-        // }
+            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
+        }
 
         [HttpGet("{id}", Name = "GetVehicle")]
         public async Task<IActionResult> GetById(int id)

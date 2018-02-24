@@ -1,3 +1,4 @@
+import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.component';
 import * as Raven from 'raven-js';
 
 import { AppErrorHandler } from './components/app/app.error-handler';
@@ -29,7 +30,8 @@ Raven
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehiclesListComponent
     ],
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ Raven
         FormsModule,
         ToastyModule.forRoot(),
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+            { path: 'vehicles', component: VehiclesListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
             { path: 'home', component: HomeComponent },
