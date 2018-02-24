@@ -1,5 +1,5 @@
 import { VehicleService } from './../../services/vehicle.service';
-import { SaveVehicle, Vehicle } from './../../models/vehicle';
+import { SaveVehicle, Vehicle, KeyValuePair } from './../../models/vehicle';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehiclesListComponent implements OnInit {
   vehicles: Vehicle[] = [];
-
+  makes: KeyValuePair[] = [];
+  filter: any ={};
+  
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
+    this.vehicleService.getMakes()
+      .subscribe(makes => this.makes = makes);
+
     this.vehicleService.getVehicles()
       .subscribe(vehicles => this.vehicles = vehicles);
   }
