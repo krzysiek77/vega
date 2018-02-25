@@ -30,6 +30,8 @@ namespace vega.Mapping
                 .ForMember(vr => vr.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new KeyValuePairResource { Id = vf.Feature.Id, Name = vf.Feature.Name })));
 
             // API Resource to Domain - to save vehicle
+            CreateMap<FilterResource, Filter>();
+
             CreateMap<SaveVehicleResource, Vehicle>()
                 .ForMember(v => v.Id, opt => opt.Ignore()) // to ignore Id while update
                 .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.Contact.Name))

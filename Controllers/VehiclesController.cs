@@ -25,9 +25,10 @@ namespace vega.Controllers
         }
 
         [HttpGet(Name = "GetVehicles")]
-        public async Task<IEnumerable<VehicleResource>> GetVehicleAsync()
+        public async Task<IEnumerable<VehicleResource>> GetVehicleAsync(FilterResource filterResource)
         {
-            var vehicles = await repository.GetVehicles();
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var vehicles = await repository.GetVehicles(filter);
 
             return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
         }
