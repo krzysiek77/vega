@@ -9,10 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehiclesListComponent implements OnInit {
   vehicles: Vehicle[] = [];
-  //allVehicles: Vehicle[] = [];
   makes: KeyValuePair[] = [];
   models: KeyValuePair[] = [];
-  filter: any = {};
+  query: any = {};
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -24,18 +23,18 @@ export class VehiclesListComponent implements OnInit {
   }
 
   private populateVehicles() {
-    if (this.filter.makeId) {
-      this.vehicleService.getModels(this.filter.makeId)
+    if (this.query.makeId) {
+      this.vehicleService.getModels(this.query.makeId)
         .subscribe(models => this.models = models);
     } else {
       // clear list of models
       delete this.models;
     }
-    this.vehicleService.getVehicles(this.filter)
+    this.vehicleService.getVehicles(this.query)
       .subscribe(vehicles => this.vehicles = vehicles);
 
     // delete it, so it won't affert another search when the make has been changed
-    delete this.filter.modelId;
+    delete this.query.modelId;
   }
 
   onFilterChange() {
@@ -43,8 +42,18 @@ export class VehiclesListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
   }
+
+  sortBy(columnName: string) {
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = !this.query.isSortAscending;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+    }
+    this.populateVehicles();
+  } 
 
 }
