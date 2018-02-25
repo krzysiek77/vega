@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vega.Core;
+using vega.Extensions;
 using vega.Models;
 
 namespace vega.Persistence
@@ -37,10 +38,10 @@ namespace vega.Persistence
             var columnMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
                 // the way provided in C#6
-                ["make"] = v => v.Model.Make.Name,
-                ["model"] = v => v.Model.Name,
-                ["contactName"] = v => v.ContactName,
-                ["id"] = v => v.Id,
+                ["make"] = v => v.Model.Make.Name
+                , ["model"] = v => v.Model.Name
+                , ["contactName"] = v => v.ContactName
+                // , ["id"] = v => v.Id,  // EF add sorty by id by itself, so we can't use it ()
             };
             
             // the old way
@@ -49,17 +50,9 @@ namespace vega.Persistence
             // columnMap.Add("contactName", v => v.ContactName);
             // columnMap.Add("id", v => v.Id);
 
-            query = ApplyOrdering(queryObj, query, columnMap);
+            query = query.ApplyOrdering(queryObj, columnMap);
 
             return await query.ToListAsync();
-        }
-
-        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnMap)
-        {
-            if (queryObj.IsSortAscending)
-                return query.OrderBy(columnMap[queryObj.SortBy]);
-            else
-                return query.OrderByDescending(columnMap[queryObj.SortBy]);
         }
 
         public async Task<Vehicle> GetVehicle(int id, bool includeRelated = true)
