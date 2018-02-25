@@ -49,13 +49,19 @@ namespace vega.Persistence
             // columnMap.Add("contactName", v => v.ContactName);
             // columnMap.Add("id", v => v.Id);
 
-            if (queryObj.IsSortAscending)
-                query = query.OrderBy(columnMap[queryObj.SortBy]);
-            else
-                query = query.OrderByDescending(columnMap[queryObj.SortBy]);
+            query = ApplyOrdering(queryObj, query, columnMap);
 
             return await query.ToListAsync();
         }
+
+        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnMap)
+        {
+            if (queryObj.IsSortAscending)
+                return query.OrderBy(columnMap[queryObj.SortBy]);
+            else
+                return query.OrderByDescending(columnMap[queryObj.SortBy]);
+        }
+
         public async Task<Vehicle> GetVehicle(int id, bool includeRelated = true)
         {
             if (!includeRelated)
