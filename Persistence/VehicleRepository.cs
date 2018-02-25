@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vega.Core;
@@ -32,17 +34,25 @@ namespace vega.Persistence
                 query = query.Where(v => v.ModelId == queryObj.ModelId);
 
             // sorting - poor way
-            if (queryObj.SortBy == "make")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(v => v.Model.Make.Name) : query.OrderByDescending( v => v.Model.Make.Name);
+            var columnMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
+            {
+                // the way provided in C#6
+                ["make"] = v => v.Model.Make.Name,
+                ["model"] = v => v.Model.Name,
+                ["contactName"] = v => v.ContactName,
+                ["id"] = v => v.Id,
+            };
             
-            if (queryObj.SortBy == "model")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(v => v.Model.Name) : query.OrderByDescending( v => v.Model.Name);
+            // the old way
+            // columnMap.Add("make", v => v.Model.Make.Name);
+            // columnMap.Add("model", v => v.Model.Name);
+            // columnMap.Add("contactName", v => v.ContactName);
+            // columnMap.Add("id", v => v.Id);
 
-            if (queryObj.SortBy == "contactName")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(v => v.ContactName) : query.OrderByDescending( v => v.ContactName);
-
-            if (queryObj.SortBy == "id")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(v => v.Id) : query.OrderByDescending( v => v.Id);
+            if (queryObj.IsSortAscending)
+                query = query.OrderBy(columnMap[queryObj.SortBy]);
+            else
+                query = query.OrderByDescending(columnMap[queryObj.SortBy]);
 
             return await query.ToListAsync();
         }
