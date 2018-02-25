@@ -12,6 +12,13 @@ export class VehiclesListComponent implements OnInit {
   makes: KeyValuePair[] = [];
   models: KeyValuePair[] = [];
   query: any = {};
+  columns = [
+    { title: 'Id'}, //key and isSortable (bool is false by default) are not required, because we don't want to sort by this column
+    { title: 'Make', key: 'make', isSortable: true },
+    { title: 'Model', key: 'model', isSortable: true },
+    { title: 'Contact Name', key: 'contactName', isSortable: true },
+    { }, // last column with view link doesn't even have title
+  ];
 
   constructor(private vehicleService: VehicleService) { }
 
