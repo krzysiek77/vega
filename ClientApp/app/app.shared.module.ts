@@ -1,3 +1,4 @@
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.component';
 import * as Raven from 'raven-js';
 
@@ -31,7 +32,8 @@ Raven
         FetchDataComponent,
         HomeComponent,
         VehicleFormComponent,
-        VehiclesListComponent
+        VehiclesListComponent,
+        PaginationComponent,
     ],
     imports: [
         CommonModule,

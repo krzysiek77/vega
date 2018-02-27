@@ -11,7 +11,9 @@ export class VehiclesListComponent implements OnInit {
   vehicles: Vehicle[] = [];
   makes: KeyValuePair[] = [];
   models: KeyValuePair[] = [];
-  query: any = {};
+  query: any = {
+    pageSize: 3
+  };
   columns = [
     { title: 'Id'}, //key and isSortable (bool is false by default) are not required, because we don't want to sort by this column
     { title: 'Make', key: 'make', isSortable: true },
@@ -62,5 +64,10 @@ export class VehiclesListComponent implements OnInit {
     }
     this.populateVehicles();
   } 
+
+  onPageChange(page: number) {
+    this.query.page = page;
+    this.populateVehicles();
+  }
 
 }
