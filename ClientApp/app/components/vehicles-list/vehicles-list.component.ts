@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicles-list.component.css']
 })
 export class VehiclesListComponent implements OnInit {
-  vehicles: Vehicle[] = [];
+  queryResult: any = {};
   makes: KeyValuePair[] = [];
   models: KeyValuePair[] = [];
   query: any = {
@@ -39,8 +39,9 @@ export class VehiclesListComponent implements OnInit {
       // clear list of models
       delete this.models;
     }
+
     this.vehicleService.getVehicles(this.query)
-      .subscribe(vehicles => this.vehicles = vehicles);
+      .subscribe(result => this.queryResult = result);
 
     // delete it, so it won't affert another search when the make has been changed
     delete this.query.modelId;

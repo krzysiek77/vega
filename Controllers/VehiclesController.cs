@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vega.Controllers.Resources;
 using vega.Core;
+using vega.Core.Models;
 using vega.Models;
 
 namespace vega.Controllers
@@ -25,12 +26,12 @@ namespace vega.Controllers
         }
 
         [HttpGet(Name = "GetVehicles")]
-        public async Task<IEnumerable<VehicleResource>> GetVehicleAsync(VehicleQueryResource filterResource)
+        public async Task<QueryResultResource<VehicleResource>> GetVehiclesAsync(VehicleQueryResource filterResource)
         {
             var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(filterResource);
-            var vehicles = await repository.GetVehicles(filter);
+            var queryResult = await repository.GetVehicles(filter);
 
-            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
+            return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(queryResult);
         }
 
         [HttpGet("{id}", Name = "GetVehicle")]

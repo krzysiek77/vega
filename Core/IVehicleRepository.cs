@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using vega.Core.Models;
 using vega.Models;
 
 namespace vega.Core
@@ -8,7 +9,7 @@ namespace vega.Core
     // So only methods that allows to manipulate the collection should be placed here. No SAVE, UPDATE method(s) allowed.
     public interface IVehicleRepository
     {
-         Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery filter);
+         Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery filter);
          
          Task<Vehicle> GetVehicle(int id, bool includeReleated = true);
          void Add(Vehicle vehicle);
