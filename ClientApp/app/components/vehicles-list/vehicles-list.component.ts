@@ -8,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicles-list.component.css']
 })
 export class VehiclesListComponent implements OnInit {
+  private readonly PAGE_SIZE = 3;
+
   queryResult: any = {};
   makes: KeyValuePair[] = [];
   models: KeyValuePair[] = [];
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
   columns = [
     { title: 'Id'}, //key and isSortable (bool is false by default) are not required, because we don't want to sort by this column
@@ -48,12 +50,16 @@ export class VehiclesListComponent implements OnInit {
   }
 
   onFilterChange() {
+    this.query.page = 1;
     this.populateVehicles();
   }
 
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE,
+    };
+    this.populateVehicles();
   }
 
   sortBy(columnName: string) {
