@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using vega.Core.Models;
 using vega.Models;
 
 namespace vega.Persistence
@@ -16,6 +17,7 @@ namespace vega.Persistence
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleFeature> VehicleFeatures { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         // composite unique key
         protected override void OnModelCreating (ModelBuilder modelBuilder) 
