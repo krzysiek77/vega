@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using vega.Models;
+using vega.Core.Models;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     public class VehicleFeature
     {

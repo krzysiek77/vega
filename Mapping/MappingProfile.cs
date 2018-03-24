@@ -3,7 +3,6 @@ using System.Linq;
 using AutoMapper;
 using vega.Controllers.Resources;
 using vega.Core.Models;
-using vega.Models;
 
 namespace vega.Mapping
 {

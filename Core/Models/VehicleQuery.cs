@@ -1,6 +1,6 @@
 using vega.Extensions;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     public class VehicleQuery : IQueryObject
     {

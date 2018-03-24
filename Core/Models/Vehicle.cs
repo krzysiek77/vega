@@ -4,9 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using vega.Core.Models;
-using vega.Models;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     public class Vehicle
     {

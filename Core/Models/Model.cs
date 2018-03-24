@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace vega.Models
+namespace vega.Core.Models
 {
     // [Table("Models")] - by DataAnnotations its possible to change tbl name
     public class Model

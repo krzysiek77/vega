@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using vega.Core;
 using vega.Core.Models;
 using vega.Extensions;
-using vega.Models;
 
 namespace vega.Persistence
 {
