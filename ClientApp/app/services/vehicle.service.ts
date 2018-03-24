@@ -32,11 +32,6 @@ export class VehicleService {
   }
 
   getVehicle(id: any) {
-    // var res2 = this.http.get(this.vehiclesEndpoint + "/" + id)
-    //   .map(res => res.json());
-    // console.log("getVehicle - id: " + id);
-    // console.log("getVehicle: " + JSON.stringify(res2));
-    // return res2;
     return this.http.get(this.vehiclesEndpoint + "/" + id)
       .map(res => res.json());
     
