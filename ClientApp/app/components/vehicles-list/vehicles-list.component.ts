@@ -45,7 +45,7 @@ export class VehiclesListComponent implements OnInit {
     this.vehicleService.getVehicles(this.query)
       .subscribe(result => this.queryResult = result);
 
-    // delete it, so it won't affert another search when the make has been changed
+    // delete it, so it won't affect another search when the make has been changed
     delete this.query.modelId;
   }
 

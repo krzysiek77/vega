@@ -38,7 +38,7 @@ export class VehicleFormComponent implements OnInit {
     private toastyService: ToastyService
   ) { 
     route.params.subscribe(p => {
-      this.vehicle.id = +p['id']; // + in-front to convert string to number
+      this.vehicle.id = +p['id'] || 0; // + in-front to convert string to number
     });
   }
 
@@ -109,65 +109,16 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.vehicle.id) {
-      this.vehicleService.update(this.vehicle)
-        .subscribe(x=> {
-          this.toastyService.success({
-            title: 'Success',
-            msg: 'The vehicle was sucessfully updated.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 5000
-          });
+    var result$ = (this.vehicle.id) ?  this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle);
+      result$.subscribe(vehicle => {
+        this.toastyService.success({
+          title: 'Success',
+          msg: 'The vehicle was sucessfully saved.',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
         });
-    }
-    else {
-      this.vehicle.id = 0;
-      this.vehicleService.create(this.vehicle)
-        .subscribe(
-          x => {
-            this.router.navigate([`/vehicles/${x.id}`]);
-            this.toastyService.success({
-              title: 'Created',
-              msg: 'Vehicle has been created.',
-              theme: 'bootstrap',
-              showClose: true,
-              timeout: 5000
-            });
-          }
-        // instead of handling errors here, they are handled on app.module level by custom class.
-        //,
-        // err => {
-        //   // to catch and display server site errors
-        //   // if (err.status == 400) {
-  
-        //   // }
-        //   this.toastyService.error({
-        //     title: 'Error',
-        //     msg: 'An unexpected error happened.',
-        //     theme: 'bootstrap',
-        //     showClose: true,
-        //     timeout: 5000
-        //   });
-        // }
-      );
-    }
+        this.router.navigate(['/vehicles/', vehicle.id])
+      });
   }
-
-  delete() {
-    if (confirm("Are you sure?")) {
-      this.vehicleService.delete(this.vehicle.id)
-        .subscribe(x => {
-          this.router.navigate(['/home']);
-          this.toastyService.info({
-            title: 'Deleted',
-            msg: 'The vehicle was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 5000
-          });
-        })
-    }
-  }
-
 }

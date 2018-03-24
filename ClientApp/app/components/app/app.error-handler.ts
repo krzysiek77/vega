@@ -17,9 +17,10 @@ export class AppErrorHandler implements ErrorHandler {
 
         this.ngZone.run(() => {
             if (typeof(window) !== 'undefined') {
+                console.log(error);
                 this.toastyService.error({
                     title: 'Error',
-                    msg: 'An unexpected error happened.',
+                    msg: 'An unexpected error happened. ' + error,
                     theme: 'bootstrap',
                     showClose: true,
                     timeout: 5000

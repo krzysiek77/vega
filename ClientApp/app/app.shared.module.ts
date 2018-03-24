@@ -1,3 +1,4 @@
+import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.component';
 import * as Raven from 'raven-js';
@@ -33,6 +34,7 @@ Raven
         HomeComponent,
         VehicleFormComponent,
         VehiclesListComponent,
+        ViewVehicleComponent,
         PaginationComponent,
     ],
     imports: [
@@ -42,9 +44,10 @@ Raven
         ToastyModule.forRoot(),
         RouterModule.forRoot([
             { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
-            { path: 'vehicles', component: VehiclesListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
-            { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+            { path: 'vehicles/:id', component: ViewVehicleComponent },
+            { path: 'vehicles', component: VehiclesListComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
