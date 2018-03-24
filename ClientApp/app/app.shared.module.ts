@@ -21,6 +21,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 
 import { VehicleService } from './services/vehicle.service';
+import { PhotoService } from './services/photo.service';
 
 Raven
     .config('https://cbcf673de706411e8b977dee9300bd64@sentry.io/291441')
@@ -56,7 +57,8 @@ Raven
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler}, // wherever instance of ErrorHandler is needed, create instance of AppErrorHandler instead
-        VehicleService
+        VehicleService,
+        PhotoService
     ]
 })
 export class AppModuleShared {

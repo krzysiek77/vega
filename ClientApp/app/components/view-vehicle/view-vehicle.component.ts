@@ -1,7 +1,8 @@
+import { PhotoService } from './../../services/photo.service';
 import { Vehicle } from './../../models/vehicle';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { VehicleService } from '../../services/vehicle.service';
 import { SaveVehicle } from '../../models/vehicle';
 
@@ -11,6 +12,7 @@ import { SaveVehicle } from '../../models/vehicle';
   styleUrls: ['./view-vehicle.component.css']
 })
 export class ViewVehicleComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   // need to be initialized properly in Angular 5 (I think)
   // otherwise it's going to work, but will return errors as well (which is stupid as fuck)
   vehicle: Vehicle = {
@@ -38,6 +40,7 @@ export class ViewVehicleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService,
+    private photoService: PhotoService,
     private vehicleService: VehicleService) { 
 
       route.params.subscribe(p => {
@@ -77,6 +80,17 @@ export class ViewVehicleComponent implements OnInit {
           });
         })
     }
+  }
+
+  uploadPhoto() {
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    // If your compiler is showing an error "object is possibly null" on the naitveElement.files[0] part of the photoService.upload statement in uploadPhoto function, simply append "!" between files property and the index like so:
+    // this.photoService.upload(this.vehicleId,naitveElement.files![0]).subscribe(x => console.log(x));
+    // or do a truthy check like so:
+    // if(naitveElement.files)
+    // this.photoService.upload(this.vehicleId,naitveElement.files[0]).subscribe(x => console.log(x));
+    this.photoService.upload(this.vehicleId, nativeElement.files![0])
+      .subscribe(x => console.log(x));
   }
 
 }
