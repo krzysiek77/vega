@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore; // UseSqlServer
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using vega.Core;
+using vega.Core.Models;
 using vega.Persistence;
 
 namespace vega
@@ -26,6 +27,7 @@ namespace vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             // add AutoMapper dependency injection services
