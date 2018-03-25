@@ -35,6 +35,7 @@ export class ViewVehicleComponent implements OnInit {
     lastUpdated: ""
   };
   vehicleId: number = 0;
+  photos: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +54,9 @@ export class ViewVehicleComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log("ngOnInit = " + this.vehicleId);
+    this.photoService.getPhotos(this.vehicleId)
+      .subscribe(photos => this.photos = photos);
+
     this.vehicleService.getVehicle(this.vehicleId)
       .subscribe(
         v => this.vehicle = v,
@@ -63,7 +66,6 @@ export class ViewVehicleComponent implements OnInit {
             return;
           }
         });
-    console.log("ngOnInit: " + this.vehicle.id);
   }
 
   delete() {
@@ -90,7 +92,9 @@ export class ViewVehicleComponent implements OnInit {
     // if(naitveElement.files)
     // this.photoService.upload(this.vehicleId,naitveElement.files[0]).subscribe(x => console.log(x));
     this.photoService.upload(this.vehicleId, nativeElement.files![0])
-      .subscribe(x => console.log(x));
+      .subscribe(photo => {
+        this.photos.push(photo);
+      });
   }
 
 }
