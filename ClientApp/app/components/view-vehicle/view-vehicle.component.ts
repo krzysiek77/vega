@@ -1,3 +1,4 @@
+import { ProgressService } from './../../services/progress.service';
 import { PhotoService } from './../../services/photo.service';
 import { Vehicle } from './../../models/vehicle';
 import { ToastyService } from 'ng2-toasty';
@@ -42,6 +43,7 @@ export class ViewVehicleComponent implements OnInit {
     private router: Router,
     private toasty: ToastyService,
     private photoService: PhotoService,
+    private progressService: ProgressService,
     private vehicleService: VehicleService) { 
 
       route.params.subscribe(p => {
@@ -86,6 +88,9 @@ export class ViewVehicleComponent implements OnInit {
 
   uploadPhoto() {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    
+    this.progressService.uploadProgress
+      .subscribe(progress => console.log(progress));
     // If your compiler is showing an error "object is possibly null" on the naitveElement.files[0] part of the photoService.upload statement in uploadPhoto function, simply append "!" between files property and the index like so:
     // this.photoService.upload(this.vehicleId,naitveElement.files![0]).subscribe(x => console.log(x));
     // or do a truthy check like so:
