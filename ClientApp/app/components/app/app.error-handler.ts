@@ -10,11 +10,6 @@ export class AppErrorHandler implements ErrorHandler {
         @Inject(ToastyService) private toastyService: ToastyService) {};
 
     handleError(error: any): void {
-        //if (!isDevMode())
-            Raven.captureException(error.originalError || error);
-        //else
-        //    throw error; // throw error to the console
-
         this.ngZone.run(() => {
             if (typeof(window) !== 'undefined') {
                 console.log(error);
@@ -27,6 +22,12 @@ export class AppErrorHandler implements ErrorHandler {
                 });
             };
         });
+        if (!isDevMode())
+            Raven.captureException(error.originalError || error);
+        else
+           throw error; // throw error to the console
+
+        
     }
 }
 

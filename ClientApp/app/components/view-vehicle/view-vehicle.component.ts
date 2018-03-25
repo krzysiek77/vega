@@ -89,8 +89,6 @@ export class ViewVehicleComponent implements OnInit {
   }
 
   uploadPhoto() {
-    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-    
     this.progressService.startTracking()
       .subscribe(progress => {
         console.log(progress);
@@ -100,14 +98,28 @@ export class ViewVehicleComponent implements OnInit {
       },
       () => null,
       () => { this.progress = null; });
+      
     // If your compiler is showing an error "object is possibly null" on the naitveElement.files[0] part of the photoService.upload statement in uploadPhoto function, simply append "!" between files property and the index like so:
     // this.photoService.upload(this.vehicleId,naitveElement.files![0]).subscribe(x => console.log(x));
     // or do a truthy check like so:
     // if(naitveElement.files)
     // this.photoService.upload(this.vehicleId,naitveElement.files[0]).subscribe(x => console.log(x));
-    this.photoService.upload(this.vehicleId, nativeElement.files![0])
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    var file = nativeElement.files![0];
+    nativeElement.value = '';
+    
+    this.photoService.upload(this.vehicleId, file)
       .subscribe(photo => {
         this.photos.push(photo);
+      },
+      err => {
+        this.toasty.error({
+          title: 'Error',
+          msg: err.text(),
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
+      });
       });
   }
 
