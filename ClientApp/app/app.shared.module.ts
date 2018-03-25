@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
@@ -61,7 +62,8 @@ Raven
         { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
         VehicleService,
         PhotoService,
-        ProgressService
+        ProgressService,
+        AuthService
     ]
 })
 export class AppModuleShared {
