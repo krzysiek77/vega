@@ -9,15 +9,16 @@ import * as auth0 from 'auth0-js';
 export class AuthService {
 
   auth0 = new auth0.WebAuth({
-    clientID: 'HNb2bq2VSOnCCzMKMSPyiJA5DoX4uNcG',
+    clientID: 'OnceAC5DRjJtE7nGNqviZM9rTTTdnQwR',
     domain: 'blus4uuu.eu.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://blus4uuu.eu.auth0.com/userinfo',
+    audience: 'https://api.vega.com',
     redirectUri: 'http://localhost:5000/vehicles',
     scope: 'openid'
   });
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+  }
 
   public login(): void {
     this.auth0.authorize();
@@ -29,6 +30,7 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
         this.router.navigate(['/home']);
+        console.log("authResult", authResult);
       } else if (err) {
         this.router.navigate(['/home']);
         console.log(err);
@@ -56,7 +58,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // Access Token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at')!);
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
   }
 

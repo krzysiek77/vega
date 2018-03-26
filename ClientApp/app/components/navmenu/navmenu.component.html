@@ -13,7 +13,7 @@
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]="['link-active']">
-                    <a href="https://blus4uuu.eu.auth0.com/login?client=HNb2bq2VSOnCCzMKMSPyiJA5DoX4uNcG" *ngIf="!auth.isAuthenticated()">
+                    <a (click)="auth.login()" *ngIf="!auth.isAuthenticated()">
                         <span class='glyphicon glyphicon-user'></span> Login
                     </a>
                     <a (click)="auth.logout()" *ngIf="auth.isAuthenticated()">
