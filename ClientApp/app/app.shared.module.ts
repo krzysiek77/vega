@@ -1,3 +1,4 @@
+import { AdminComponent } from './components/admin/admin.component';
 import { AuthService } from './services/auth.service';
 import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
@@ -39,6 +40,7 @@ Raven
         VehiclesListComponent,
         ViewVehicleComponent,
         PaginationComponent,
+        AdminComponent
     ],
     imports: [
         CommonModule,
@@ -54,6 +56,7 @@ Raven
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
+            { path: 'admin', component: AdminComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

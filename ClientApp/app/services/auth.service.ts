@@ -1,5 +1,5 @@
 // src/app/auth/auth.service.ts
-
+import { JwtHelper } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -7,6 +7,7 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
+  private roles: string[] =[];
 
   auth0 = new auth0.WebAuth({
     clientID: 'OnceAC5DRjJtE7nGNqviZM9rTTTdnQwR',
@@ -14,10 +15,27 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://api.vega.com',
     redirectUri: 'http://localhost:5000/vehicles',
-    scope: 'openid'
+    scope: 'openid profile',
   });
 
   constructor(public router: Router) {
+    // Get user info from local storage
+      this.readUserInfoFromLocalStorage();
+  }
+
+  private readUserInfoFromLocalStorage() {
+    // this.profile = JSON.parse(localStorage.getItem('profile'));
+  
+    let token = localStorage.getItem('access_token');
+    if (token) {
+      let jwtHelper = new JwtHelper();
+      let decodedToken = jwtHelper.decodeToken(token);
+      this.roles = decodedToken['https://vega.com/roles'];
+    }
+  }
+
+  public isInRole(roleName: string) {
+    return this.roles.indexOf(roleName) > -1;
   }
 
   public login(): void {
@@ -29,6 +47,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
+        this.readUserInfoFromLocalStorage();
         this.router.navigate(['/home']);
         console.log("authResult", authResult);
       } else if (err) {
@@ -51,6 +70,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    this.roles = [];
     // Go back to the home route
     this.router.navigate(['/']);
   }
