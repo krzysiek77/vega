@@ -1,3 +1,5 @@
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { AdminComponent } from './components/admin/admin.component';
 import { AuthService } from './services/auth.service';
 import { BrowserXhrWithProgress, ProgressService } from './services/progress.service';
@@ -56,17 +58,19 @@ Raven
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'admin', component: AdminComponent },
+            { path: 'admin', component: AdminComponent , canActivate: [ AdminAuthGuard ] },
             { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler}, // wherever instance of ErrorHandler is needed, create instance of AppErrorHandler instead
         { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
-        VehicleService,
+        AdminAuthGuard,
+        AuthGuard,
+        AuthService,
         PhotoService,
         ProgressService,
-        AuthService
+        VehicleService,
     ]
 })
 export class AppModuleShared {
