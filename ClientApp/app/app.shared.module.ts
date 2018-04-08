@@ -27,6 +27,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
 
 import { VehicleService } from './services/vehicle.service';
 import { PhotoService } from './services/photo.service';
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 Raven
     .config('https://cbcf673de706411e8b977dee9300bd64@sentry.io/291441')
@@ -64,12 +65,13 @@ Raven
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler}, // wherever instance of ErrorHandler is needed, create instance of AppErrorHandler instead
-        { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+        // { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
         AdminAuthGuard,
+        AUTH_PROVIDERS, // defined in angular2/jwt library. It provides AuthHttp and its dependencies
         AuthGuard,
         AuthService,
         PhotoService,
-        ProgressService,
+        // ProgressService,
         VehicleService,
     ]
 })

@@ -76,6 +76,7 @@ namespace vega
             app.UseStaticFiles();
 
             // 2. Enable authentication middleware
+            
             app.UseAuthentication();
 
             app.UseMvc(routes =>
