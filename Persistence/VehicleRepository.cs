@@ -25,18 +25,17 @@ namespace vega.Persistence
             var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
-                .Include(v => v.Features)
-                    .ThenInclude(vf => vf.Feature)
                 .AsQueryable();
 
             // filtering
-            if (queryObj.MakeId.HasValue)
-                query = query.Where(v => v.Model.MakeId == queryObj.MakeId);
-
-            if (queryObj.ModelId.HasValue)
-                query = query.Where(v => v.ModelId == queryObj.ModelId);
+            query = query.ApplyFiltering(queryObj);
 
             // sorting - poor way
+            // the old way
+            // columnMap.Add("make", v => v.Model.Make.Name);
+            // columnMap.Add("model", v => v.Model.Name);
+            // columnMap.Add("contactName", v => v.ContactName);
+            // columnMap.Add("id", v => v.Id);
             var columnMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
                 // the way provided in C#6
@@ -45,13 +44,6 @@ namespace vega.Persistence
                 , ["contactName"] = v => v.ContactName
                 // , ["id"] = v => v.Id,  // EF add sorty by id by itself, so we can't use it ()
             };
-            
-            // the old way
-            // columnMap.Add("make", v => v.Model.Make.Name);
-            // columnMap.Add("model", v => v.Model.Name);
-            // columnMap.Add("contactName", v => v.ContactName);
-            // columnMap.Add("id", v => v.Id);
-
             query = query.ApplyOrdering(queryObj, columnMap);
 
             // total
