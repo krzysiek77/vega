@@ -11,6 +11,7 @@ import * as Raven from 'raven-js';
 import { AppErrorHandler } from './components/app/app.error-handler';
 import { ErrorHandler } from '@angular/core';
 import { NgModule } from '@angular/core';
+import { ChartModule } from 'angular2-chartjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, BrowserXhr } from '@angular/http';
@@ -46,6 +47,8 @@ Raven
         AdminComponent
     ],
     imports: [
+        //UniversalModule,
+        ChartModule,
         CommonModule,
         HttpModule,
         FormsModule,
