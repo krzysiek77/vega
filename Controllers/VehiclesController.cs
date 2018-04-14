@@ -46,7 +46,7 @@ namespace vega.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize] //Policies.RequireAdminRole
         public async Task<IActionResult> Create([FromBody] SaveVehicleResource vehicleResource)
         {
             if (!ModelState.IsValid)

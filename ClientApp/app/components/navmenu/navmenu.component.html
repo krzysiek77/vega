@@ -30,7 +30,7 @@
                         <span class='glyphicon glyphicon-plus'></span> List of Vehicles
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li *ngIf="auth.isAuthenticated()" [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/vehicles/new']">
                         <span class='glyphicon glyphicon-plus'></span> New Vehicle
                     </a>

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { VehicleService } from './../../services/vehicle.service';
 import { SaveVehicle, Vehicle, KeyValuePair } from './../../models/vehicle';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +25,7 @@ export class VehiclesListComponent implements OnInit {
     { }, // last column with view link doesn't even have title
   ];
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService, private auth: AuthService) { }
 
   ngOnInit() {
     this.vehicleService.getMakes()

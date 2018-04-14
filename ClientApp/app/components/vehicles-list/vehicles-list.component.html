@@ -1,6 +1,6 @@
 <h1>List of Vehicles</h1>
 
-<p>
+<p *ngIf="auth.isAuthenticated()">
   <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
 </p>
 
